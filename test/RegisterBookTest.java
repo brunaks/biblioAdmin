@@ -1,4 +1,11 @@
+import DTOs.BookInformation;
+import Persistence.BookRepository;
+import Persistence.InMemoryBookRepository;
+import UseCases.RegisterBook;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Created by 0143138 on 08/11/2016.
@@ -16,5 +23,11 @@ public class RegisterBookTest {
         bookInformation.setPublishingCompany("Publishing Company");
         RegisterBook registerBook = new RegisterBook(bookRepository, bookInformation);
         registerBook.execute();
+
+        ReadBooks readBooks = new ReadBooks();
+        List<BookInformation> books = readBooks.getAll();
+
+        Assert.assertEquals(1, books.size());
+
     }
 }
