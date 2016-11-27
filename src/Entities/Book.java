@@ -1,8 +1,5 @@
 package Entities;
 
-/**
- * Created by 0143138 on 08/11/2016.
- */
 public class Book {
 
     private String author;
@@ -72,7 +69,15 @@ public class Book {
         }
 
         private boolean formatIsValid() {
-            return code.length() == 13;
+            return code.length() == 13 && first12digitsAreOnlyNumber() && lastDigitIsANumberOrAnXLetter();
+        }
+
+        private boolean first12digitsAreOnlyNumber() {
+            return code.substring(0,12).matches("[0-9]+");
+        }
+
+        private boolean lastDigitIsANumberOrAnXLetter() {
+            return code.substring(12).matches("[0-9]+") || code.substring(12).matches("[Xx]");
         }
     }
 }

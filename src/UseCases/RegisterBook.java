@@ -4,9 +4,8 @@ import DTOs.BookInformation;
 import Entities.Book;
 import Persistence.BookRepository;
 
-/**
- * Created by 0143138 on 08/11/2016.
- */
+import java.util.List;
+
 public class RegisterBook {
 
     private BookInformation bookInformation;
@@ -20,9 +19,19 @@ public class RegisterBook {
 
     public void execute() {
         this.book = createBook();
-        if (book.isValid()) {
+        if (book.isValid() && bookIsUnique()) {
             bookRepository.save(book);
         }
+    }
+
+    private boolean bookIsUnique() {
+        List<Book> books = bookRepository.getAll();
+        for (Book book : books) {
+            if (this.book.getISBN().equalsIgnoreCase(book.getISBN())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private Book createBook() {

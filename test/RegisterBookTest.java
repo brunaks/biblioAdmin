@@ -9,9 +9,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-/**
- * Created by 0143138 on 08/11/2016.
- */
 public class RegisterBookTest {
 
     public BookRepository bookRepository;
@@ -145,6 +142,30 @@ public class RegisterBookTest {
         List<BookInformation> books = readBooks.getAll();
 
         Assert.assertEquals(0, books.size());
+    }
+
+    @Test
+    public void shouldNotRegisterTwoBooksWithSameISBN() {
+        BookInformation bookInformation = new BookInformation();
+        bookInformation.author = "Author";
+        bookInformation.title = "Title";
+        bookInformation.ISBN = "1111111111111";
+        bookInformation.edition = "1";
+        bookInformation.publishingCompany = "Publishing Company";
+        RegisterBook registerBook = new RegisterBook(bookRepository, bookInformation);
+        registerBook.execute();
+
+        ReadBooks readBooks = new ReadBooks(bookRepository);
+        List<BookInformation> books = readBooks.getAll();
+
+        Assert.assertEquals(1, books.size());
+        assertBook(bookInformation, books.get(0));
+
+        RegisterBook registerBook2 = new RegisterBook(bookRepository, bookInformation);
+        registerBook2.execute();
+        books = readBooks.getAll();
+        Assert.assertEquals(1, books.size());
+        assertBook(bookInformation, books.get(0));
     }
 
     public void assertBook(BookInformation expectedBookInformation, BookInformation actualBookInformation) {
