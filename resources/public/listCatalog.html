@@ -41,9 +41,8 @@
             var textNode = document.createTextNode("Delete Book");
             button.appendChild(textNode);
             button.className = "btn btn-primary";
-            button.setAttribute("onclick", "deleteBook(this)");
+            button.setAttribute("onclick", "deleteBook(\"" + obj["ISBN"] + "\")");
             row.appendChild(button);
-
         }
 
         function showList() {
@@ -69,27 +68,25 @@
             request.send();
         }
 
-        function deleteBook(button) {
+        function deleteBook(isbnToDelete) {
             deleteRequest = new XMLHttpRequest();
-            refreshList();
-            load();
-            var isbnToDelete;
-            var tableRow= button.parentNode;
-            for (var i = 0; i < tableRow.cells.length; i++) {
-                if (tableData = tableRow.cells[i] === "ISBN") {
-                    isbnToDelete = tableData.innerHTML;
-                    break;
-                }
-            }
-            deleteRequest.open("post", "deleteBook", true);
+            deleteRequest.onreadystatechange = onDeletion;
+            deleteRequest.open("delete", "deleteBook?isbn=" + isbnToDelete, true);
             deleteRequest.send();
         };
+
+        function onDeletion() {
+            if (request.status === 200 && request.readyState === 4) {
+                refreshList();
+                load();
+            }
+         }
 
         function refreshList() {
             var elem = document.getElementById('table');
             if (typeof elem != 'undefined')
             {
-                elem.parentNode.removeChild(elem);
+                
             }
         }
 
