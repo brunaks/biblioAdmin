@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.js"></script>
+    <style>
+        #successMessage, #failMessage {
+            visibility: hidden;
+            display: none;
+        }
+    </style>
+    <script>
+        var request;
+
+        function showRequestStatus() {
+            if (request.status === 200 && request.readyState === 4) {
+                var json = JSON.parse(request.response);
+                if (json.bookRegistrationWasSuccessful == true) {
+                    var paragraph = document.createElement("p");
+                    var text = document.createTextNode("Registration Successful");
+                    var alert = document.getElementById("successMessage");
+                    paragraph.appendChild(text);
+                    alert.appendChild(paragraph);
+                    alert.style.visibility = "visible";
+                    alert.style.display = "block";
+
+                }
+                else {
+                    var paragraph = document.createElement("p");
+                    var text = document.createTextNode("Registration Failed. Please check your input and try again.");
+                    var alert = document.getElementById("failMessage");
+                    paragraph.appendChild(text);
+                    alert.appendChild(paragraph);
+                    alert.style.visibility = "visible";
+                    alert.style.display = "block";
+                }
+            }
+        }
+
+        function register() {
+            document.getElementById("successMessage").style.visibility = "hidden";
+            document.getElementById("successMessage").style.display = "none";
+            document.getElementById("failMessage").style.visibility = "hidden";
+            document.getElementById("failMessage").style.display = "none";
+
+            request = new XMLHttpRequest();
+            request.onreadystatechange = showRequestStatus;
+            request.open("POST", "registerBook", true);
+            request.send(JSON.stringify(
+                    {
+                        title: document.getElementById('title').value,
+                        author: document.getElementById('author').value,
+                        edition: document.getElementById('edition').value,
+                        ISBN: document.getElementById('isbn').value,
+                        publishingCompany: document.getElementById('publishing_company').value
+                    }
+            ));
+        }
+
+    </script>
+</head>
+<body id="content" onload="load_menu()">
+<div ui-view class="container">
+    <div id="menu"></div>
+
+    <div class="alert alert-success" id="successMessage" role="alert">
+    </div>
+
+    <div class="alert alert-danger" id="failMessage" role="alert">
+    </div>
+
+    <h2 class="page-header">Register a book using the form below:</h2>
+
+    <form class="form-horizontal" role="form" data-toggle="validator">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="title">Title:</label>
+
+            <div class="col-sm-6">
+                <input type="text" name="title" class="form-control" placeholder="Title" id="title" data-error="Please, fill out this field" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="author">Author:</label>
+
+            <div class="col-sm-6">
+                <input type="text" name="author" class="form-control" maxlength="11" placeholder="Author" id="author" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="edition">Edition:</label>
+
+            <div class="col-sm-6">
+                <input type="text" name="edition" class="form-control" maxlength="10" placeholder="Edition Number" id="edition" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="isbn">ISBN:</label>
+
+            <div class="col-sm-6">
+                <input type="text" name="isbn" class="form-control" placeholder="ISBN number" id="isbn" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="publishing_company">Publishing Company:</label>
+
+            <div class="col-sm-6">
+                <input type="text" name="publishing_company" class="form-control" placeholder="Publishing Company" id="publishing_company" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+                <input type="button" value="Save" class="btn btn-primary" onclick="register();">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

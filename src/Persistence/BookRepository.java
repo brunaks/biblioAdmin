@@ -1,6 +1,7 @@
 package Persistence;
 
 import Entities.Book;
+import Entities.BookCopy;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ import java.util.List;
 public interface BookRepository {
     void save(Book book);
     List<Book> getAll();
+    Book getBookWith(String ISBN);
+    void save(BookCopy bookCopy);
 }

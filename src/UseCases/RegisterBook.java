@@ -3,24 +3,30 @@ package UseCases;
 import DTOs.BookInformation;
 import Entities.Book;
 import Persistence.BookRepository;
+import Receiver.Receiver;
 
 import java.util.List;
 
 public class RegisterBook {
 
+    private Receiver receiver;
     private BookInformation bookInformation;
     private BookRepository bookRepository;
     private Book book;
 
-    public RegisterBook(BookRepository bookRepository, BookInformation bookInformation) {
+    public RegisterBook(BookRepository bookRepository, Receiver receiver, BookInformation bookInformation) {
         this.bookRepository = bookRepository;
         this.bookInformation = bookInformation;
+        this.receiver = receiver;
     }
 
     public void execute() {
         this.book = createBook();
         if (book.isValid() && bookIsUnique()) {
             bookRepository.save(book);
+            receiver.bookRegistrationSuccessful();
+        } else {
+            receiver.bookRegistrationFailed();
         }
     }
 

@@ -1,5 +1,8 @@
 package Entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Book {
 
     private String author;
@@ -7,6 +10,7 @@ public class Book {
     private ISBN ISBN;
     private String edition;
     private String publishingCompany;
+    private List<BookCopy> bookCopies = new ArrayList<>();
 
     public void setTitle(String title) {
         this.title = title;
@@ -50,6 +54,10 @@ public class Book {
 
     public String getEdition() {
         return edition;
+    }
+
+    public List<BookCopy> getBookCopies() {
+        return bookCopies;
     }
 
     public class ISBN {
