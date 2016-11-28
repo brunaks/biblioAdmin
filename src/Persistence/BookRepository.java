@@ -13,4 +13,5 @@ public interface BookRepository {
     List<Book> getAll();
     Book getBookWith(String ISBN);
     void save(BookCopy bookCopy);
+    void deleteBookWith(String ISBN);
 }

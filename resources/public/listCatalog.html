@@ -37,6 +37,13 @@
                 data.appendChild(text);
                 row.appendChild(data);
             }
+            var button = document.createElement("button");
+            var textNode = document.createTextNode("Delete Book");
+            button.appendChild(textNode);
+            button.className = "btn btn-primary";
+            button.setAttribute("onclick", "deleteBook(this)");
+            row.appendChild(button);
+
         }
 
         function showList() {
@@ -61,6 +68,32 @@
             request.open("get", "listCatalog", true);
             request.send();
         }
+
+        function deleteBook(button) {
+            deleteRequest = new XMLHttpRequest();
+            refreshList();
+            load();
+            var isbnToDelete;
+            var tableRow= button.parentNode;
+            for (var i = 0; i < tableRow.cells.length; i++) {
+                if (tableData = tableRow.cells[i] === "ISBN") {
+                    isbnToDelete = tableData.innerHTML;
+                    break;
+                }
+            }
+            deleteRequest.open("post", "deleteBook", true);
+            deleteRequest.send();
+        };
+
+        function refreshList() {
+            var elem = document.getElementById('table');
+            if (typeof elem != 'undefined')
+            {
+                elem.parentNode.removeChild(elem);
+            }
+        }
+
+
 
     </script>
 </head>

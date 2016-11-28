@@ -6,4 +6,6 @@ package Receiver;
 public interface Receiver {
     void bookRegistrationSuccessful();
     void bookRegistrationFailed();
+    void bookDeletionWasSuccessful();
+    void bookDeletionFailed();
 }

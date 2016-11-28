@@ -65,7 +65,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>Main.Main</mainClass>
+                            <mainClass>Main.main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
