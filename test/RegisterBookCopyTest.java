@@ -39,7 +39,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.ISBN = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
-        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation);
+        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
         ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
@@ -56,7 +56,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.ISBN = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
-        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation);
+        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
         ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
@@ -79,14 +79,14 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.ISBN = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
-        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation);
+        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
         BookCopyInformation bookCopyInformation2 = new BookCopyInformation();
         bookCopyInformation2.id = "2";
         bookCopyInformation2.ISBN = "1111111111111";
         bookCopyInformation2.status = BookCopy.Status.AVAILABLE.toString();
-        RegisterBookCopy registerBookCopy2 = new RegisterBookCopy(bookRepository, bookCopyInformation2);
+        RegisterBookCopy registerBookCopy2 = new RegisterBookCopy(bookRepository, bookCopyInformation2, receiver);
         registerBookCopy2.execute();
 
         ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
@@ -117,7 +117,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "";
         bookCopyInformation.ISBN = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
-        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation);
+        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
         ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
@@ -140,7 +140,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.ISBN = "";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
-        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation);
+        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
         ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
@@ -163,11 +163,44 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.ISBN = "1111111111111";
         bookCopyInformation.status = "";
-        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation);
+        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
         ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
         List<BookCopyInformation> bookCopies = readBookCopies.getAllFor(bookCopyInformation.ISBN);
         Assert.assertEquals(0, bookCopies.size());
+    }
+
+    @Test
+    public void sameId_doNotRegisterTwoCopies() {
+        BookInformation bookInformation = new BookInformation();
+        bookInformation.author = "Author";
+        bookInformation.title = "Title";
+        bookInformation.ISBN = "1111111111111";
+        bookInformation.edition = "1";
+        bookInformation.publishingCompany = "Publishing Company";
+        RegisterBook registerBook = new RegisterBook(bookRepository, receiver, bookInformation);
+        registerBook.execute();
+
+        BookCopyInformation bookCopyInformation = new BookCopyInformation();
+        bookCopyInformation.id = "1";
+        bookCopyInformation.ISBN = "1111111111111";
+        bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
+        RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
+        registerBookCopy.execute();
+
+        BookCopyInformation bookCopyInformation2 = new BookCopyInformation();
+        bookCopyInformation2.id = "1";
+        bookCopyInformation2.ISBN = "1111111111111";
+        bookCopyInformation2.status = BookCopy.Status.AVAILABLE.toString();
+        RegisterBookCopy registerBookCopy2 = new RegisterBookCopy(bookRepository, bookCopyInformation2, receiver);
+        registerBookCopy2.execute();
+
+        ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
+        List<BookCopyInformation> bookCopies = readBookCopies.getAllFor(bookCopyInformation.ISBN);
+        Assert.assertEquals(1, bookCopies.size());
+        Assert.assertEquals("1", bookCopies.get(0).id);
+        Assert.assertEquals("1111111111111", bookCopies.get(0).ISBN);
+        Assert.assertEquals(BookCopy.Status.AVAILABLE.toString(), bookCopies.get(0).status);
     }
 }

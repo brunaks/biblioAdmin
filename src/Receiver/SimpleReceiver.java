@@ -12,6 +12,8 @@ public class SimpleReceiver implements Receiver {
     public boolean editionIsEmpty = false;
     public boolean publishingCompanyIsEmpty = false;
     public boolean ISBNFormatIsNotValid = false;
+    private boolean idCannotBeBlank = false;
+    private boolean statusCannotBeBlank = false;
 
     @Override
     public void bookRegistrationSuccessful() {
@@ -66,5 +68,15 @@ public class SimpleReceiver implements Receiver {
     @Override
     public void logErrorISBNLengthIsIncorrect() {
         ISBNFormatIsNotValid = true;
+    }
+
+    @Override
+    public void logErrorIdCannotBeBlank() {
+        idCannotBeBlank = true;
+    }
+
+    @Override
+    public void logErrorStatusCannotBeBlank() {
+        statusCannotBeBlank = true;
     }
 }

@@ -8,12 +8,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="scripts.js"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.js"></script>
     <style>
         #successMessage, #failMessage {
             visibility: hidden;
             display: none;
         }
+
     </style>
     <script>
         var request;
@@ -94,53 +95,16 @@
             }
         }
 
-        function checkAuthor(json) {
-            if (json.authorIsEmpty == true) {
-                var input = document.getElementById('author');
-                var paragraph = document.createElement("p");
-                var text = document.createTextNode("Author cannot be blank");
-                var alert = document.getElementById("failMessage");
-                paragraph.appendChild(text);
-                alert.appendChild(paragraph);
-            }
+        function loadISBN() {
+            var parameters = new URLSearchParams(window.location.search);
+            var isbn = parameters.get('isbn');
+            document.getElementById('isbn').value = isbn;
         }
 
-        function checkEdition(json) {
-            if (json.editionIsEmpty == true) {
-                var input = document.getElementById('edition');
-                var paragraph = document.createElement("p");
-                var text = document.createTextNode("Edition cannot be blank");
-                var alert = document.getElementById("failMessage");
-                paragraph.appendChild(text);
-                alert.appendChild(paragraph);
-            }
-        }
-
-        function checkPublishingCompany(json) {
-            if (json.publishingCompanyIsEmpty == true) {
-                var input = document.getElementById('publishingCompany');
-                var paragraph = document.createElement("p");
-                var text = document.createTextNode("Publishing Company cannot be blank");
-                var alert = document.getElementById("failMessage");
-                paragraph.appendChild(text);
-                alert.appendChild(paragraph);
-            }
-        }
-
-        function checkISBN(json) {
-            if (json.ISBNFormatIsNotValid == true) {
-                var input = document.getElementById('isbn');
-                var paragraph = document.createElement("p");
-                var text = document.createTextNode("ISBN format is not valid. The correct format is 13 digits. The last one can be a number or X.");
-                var alert = document.getElementById("failMessage");
-                paragraph.appendChild(text);
-                alert.appendChild(paragraph);
-            }
-        }
 
     </script>
 </head>
-<body id="content" onload="load_menu()">
+<body id="content" onload="load_menu();loadISBN()">
 <div ui-view class="container">
     <div id="menu"></div>
 
@@ -150,46 +114,33 @@
     <div class="alert alert-danger" id="failMessage" role="alert">
     </div>
 
-    <h2 class="page-header">Register a book using the form below:</h2>
+    <h2 class="page-header">Register a book copy using the form below:</h2>
 
     <form class="form-horizontal" role="form" data-toggle="validator">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="title">Title:</label>
-
-            <div class="col-sm-6">
-                <input type="text" name="title" class="form-control" placeholder="Title" id="title" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="author">Author:</label>
-
-            <div class="col-sm-6">
-                <input type="text" name="author" class="form-control" placeholder="Author" id="author" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="edition">Edition:</label>
-
-            <div class="col-sm-6">
-                <input type="text" name="edition" class="form-control" placeholder="Edition Number" id="edition" required>
-            </div>
-        </div>
-
         <div class="form-group">
             <label class="control-label col-sm-2" for="isbn">ISBN:</label>
 
             <div class="col-sm-6">
-                <input type="text" name="isbn" class="form-control" placeholder="ISBN number" id="isbn" required>
+                <input type="text" name="isbn" class="form-control" placeholder="ISBN" id="isbn" readonly>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-sm-2" for="publishing_company">Publishing Company:</label>
+            <label class="control-label col-sm-2" for="id">ID:</label>
 
             <div class="col-sm-6">
-                <input type="text" name="publishing_company" class="form-control" placeholder="Publishing Company" id="publishing_company" required>
+                <input type="text" name="id" class="form-control" placeholder="ID" id="id" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="status">Status:</label>
+
+            <div class="col-sm-6">
+                <select class="form-control" id="status">
+                    <option value="TAKEN">Available</option>
+                    <option value="AVAILABLE">Taken</option>
+                </select>
             </div>
         </div>
 

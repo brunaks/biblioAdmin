@@ -15,4 +15,6 @@ public interface Receiver {
     void logErrorISBNMustbeNumeric();
     void logErrorISBNLastDigitMustBeNumericOrX();
     void logErrorISBNLengthIsIncorrect();
+    void logErrorIdCannotBeBlank();
+    void logErrorStatusCannotBeBlank();
 }

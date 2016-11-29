@@ -11,6 +11,7 @@
     <script>
         var request;
         var deleteRequest;
+        var registerCopyRequest;
 
         function createTableHeader(json, table) {
             var headerRow = document.createElement("tr");
@@ -37,12 +38,28 @@
                 data.appendChild(text);
                 row.appendChild(data);
             }
-            var button = document.createElement("button");
+            var deleteButton = document.createElement("button");
             var textNode = document.createTextNode("Delete Book");
-            button.appendChild(textNode);
-            button.className = "btn btn-primary";
-            button.setAttribute("onclick", "deleteBook(\"" + obj["ISBN"] + "\")");
-            row.appendChild(button);
+            deleteButton.appendChild(textNode);
+            deleteButton.className = "btn btn-primary";
+            deleteButton.setAttribute("onclick", "deleteBook(\"" + obj["ISBN"] + "\")");
+            row.appendChild(deleteButton);
+
+            var registerCopyButton = document.createElement("a");
+            var textNode = document.createTextNode("Register a Copy");
+            registerCopyButton.appendChild(textNode);
+            registerCopyButton.className = "btn btn-primary";
+            registerCopyButton.setAttribute("href", "registerCopy.html?isbn=" + obj["ISBN"]);
+            registerCopyButton.setAttribute("role", "button");
+            row.appendChild(registerCopyButton);
+
+            var seeCopiesButton = document.createElement("a");
+            var textNode = document.createTextNode("See all Copies");
+            seeCopiesButton.appendChild(textNode);
+            seeCopiesButton.className = "btn btn-primary";
+            seeCopiesButton.setAttribute("href", "listCopies.html?isbn=" + obj["ISBN"]);
+            seeCopiesButton.setAttribute("role", "button");
+            row.appendChild(seeCopiesButton);
         }
 
         function showList() {
@@ -74,6 +91,10 @@
             deleteRequest.open("delete", "deleteBook?isbn=" + isbnToDelete, true);
             deleteRequest.send();
         };
+
+        function registerCopy(isbn) {
+
+        }
 
         function onDeletion() {
             if (request.status === 200 && request.readyState === 4) {

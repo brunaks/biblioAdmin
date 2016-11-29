@@ -5,6 +5,7 @@ import Persistence.InMemoryBookRepository;
 import Receiver.*;
 import Routes.DeleteBookRoute;
 import Routes.ListBooks;
+import Routes.RegisterBookCopyRoute;
 import Routes.RegisterBookRoute;
 import spark.Request;
 import spark.Response;
@@ -26,5 +27,7 @@ public class main {
         Spark.post("/registerBook", new RegisterBookRoute(bookRepository, receiver));
         Spark.get("/listCatalog", new ListBooks(bookRepository));
         Spark.delete("/deleteBook", new DeleteBookRoute(bookRepository, receiver));
+        Spark.post("/deleteBook", new DeleteBookRoute(bookRepository, receiver));
+        Spark.post("/registerBookCopy", new RegisterBookCopyRoute(bookRepository, receiver));
     }
 }

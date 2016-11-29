@@ -40,7 +40,28 @@ public class Book {
     }
 
     public boolean isValid() {
-        return isTitleValid() && isAuthorValid() && isEditionValid() && isPublishingCompanyValid() && ISBN.isValid();
+        boolean titleIsValid = false;
+        boolean authorIsValid = false;
+        boolean editionIsValid = false;
+        boolean publishingCompanyIsValid = false;
+        boolean ISBNIsValid = false;
+
+        if (isTitleValid()) {
+            titleIsValid = true;
+        }
+        if (isAuthorValid()) {
+            authorIsValid = true;
+        }
+        if (isEditionValid()) {
+            editionIsValid = true;
+        }
+        if (isPublishingCompanyValid()) {
+            publishingCompanyIsValid = true;
+        }
+        if (ISBN.isValid()) {
+            ISBNIsValid = true;
+        }
+        return titleIsValid && authorIsValid && editionIsValid && publishingCompanyIsValid && ISBNIsValid;
     }
 
     public boolean isTitleValid() {
@@ -78,6 +99,7 @@ public class Book {
             return true;
         }
     }
+
 
     public String getTitle() {
         return title;
