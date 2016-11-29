@@ -43,4 +43,21 @@ public class InMemoryBookRepository implements BookRepository {
         Book book = getBookWith(ISBN);
         books.remove(book);
     }
+
+    @Override
+    public void deleteBookCopyWith(String isbn, String id) {
+        Book book = getBookWith(isbn);
+        if (book != null) {
+            for (BookCopy bookCopy : book.getBookCopies()) {
+                if (bookCopy.getId().equalsIgnoreCase(id)) {
+                    book.getBookCopies().remove(bookCopy);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void update(Book book) {
+
+    }
 }

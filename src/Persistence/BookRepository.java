@@ -14,4 +14,6 @@ public interface BookRepository {
     Book getBookWith(String ISBN);
     void save(BookCopy bookCopy);
     void deleteBookWith(String ISBN);
+    void deleteBookCopyWith(String isbn, String id);
+    void update(Book book);
 }

@@ -24,5 +24,8 @@ public class main {
         Spark.post("/deleteBook", new DeleteBookRoute(bookRepository, receiver));
         Spark.post("/registerBookCopy", new RegisterBookCopyRoute(bookRepository, receiver));
         Spark.get("/listCopies", new ReadCopiesRoute(bookRepository));
+        Spark.delete("/deleteBookCopy", new DeleteBookCopyRoute(bookRepository, receiver));
+        Spark.post("/loanBookCopy", new LoanBookCopyRoute(bookRepository, receiver));
+        Spark.post("/returnBookCopy", new ReturnBookCopyRoute(bookRepository,receiver));
     }
 }

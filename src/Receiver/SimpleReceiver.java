@@ -15,6 +15,7 @@ public class SimpleReceiver implements Receiver {
     public boolean ISBNFormatIsNotValid = false;
     private boolean idIsEmpty = false;
     private boolean statusIsEmpty = false;
+    private boolean bookCopyDeletionWasSuccessful = false;
 
     @Override
     public void bookRegistrationSuccessful() {
@@ -103,5 +104,10 @@ public class SimpleReceiver implements Receiver {
         ISBNFormatIsNotValid = false;
         idIsEmpty = false;
         statusIsEmpty = false;
+    }
+
+    @Override
+    public void bookCopyDeletionWasSuccessful() {
+        this.bookCopyDeletionWasSuccessful = true;
     }
 }

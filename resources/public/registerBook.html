@@ -66,6 +66,10 @@
         }
 
         function refreshMessages() {
+            document.getElementById("successMessage").style.visibility = "hidden";
+            document.getElementById("successMessage").style.display = "none";
+            document.getElementById("failMessage").style.visibility = "hidden";
+            document.getElementById("failMessage").style.display = "none";
             var message = document.getElementById('successMessage');
             if (typeof message != 'undefined')
             {

@@ -20,4 +20,5 @@ public interface Receiver {
     void bookCopyRegistrationSuccessful();
     void bookCopyRegistrationFailed();
     void refresh();
+    void bookCopyDeletionWasSuccessful();
 }

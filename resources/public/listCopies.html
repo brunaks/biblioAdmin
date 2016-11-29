@@ -39,25 +39,25 @@
                 row.appendChild(data);
             }
             var deleteButton = document.createElement("button");
-            var textNode = document.createTextNode("Delete Book");
+            var textNode = document.createTextNode("Delete Book Copy");
             deleteButton.appendChild(textNode);
             deleteButton.className = "btn btn-primary";
-            deleteButton.setAttribute("onclick", "deleteBookCopy(\"" + obj["ISBN"] + "\")");
+            deleteButton.setAttribute("onclick", "deleteBookCopy(\"" + obj["isbn"] + "\", \"" + obj["id"] + "\")");
             row.appendChild(deleteButton);
 
-            var deleteButton = document.createElement("button");
-            var textNode = document.createTextNode("Delete Book");
-            deleteButton.appendChild(textNode);
-            deleteButton.className = "btn btn-primary";
-            deleteButton.setAttribute("onclick", "loanBookCopy(\"" + obj["ISBN"] + "\")");
-            row.appendChild(deleteButton);
+            var loanButton = document.createElement("button");
+            var textNode = document.createTextNode("Loan Book Copy");
+            loanButton.appendChild(textNode);
+            loanButton.className = "btn btn-primary";
+            loanButton.setAttribute("onclick", "loanBookCopy(\"" + obj["isbn"] + "\", \"" + obj["id"] + "\")");
+            row.appendChild(loanButton);
 
-            var deleteButton = document.createElement("button");
-            var textNode = document.createTextNode("Delete Book");
-            deleteButton.appendChild(textNode);
-            deleteButton.className = "btn btn-primary";
-            deleteButton.setAttribute("onclick", "returnBookCopy(\"" + obj["ISBN"] + "\")");
-            row.appendChild(deleteButton);
+            var returnButton = document.createElement("button");
+            var textNode = document.createTextNode("Return Book Copy");
+            returnButton.appendChild(textNode);
+            returnButton.className = "btn btn-primary";
+            returnButton.setAttribute("onclick", "returnBookCopy(\"" + obj["isbn"] + "\", \"" + obj["id"] + "\")");
+            row.appendChild(returnButton);
         }
 
         function showList() {
@@ -83,19 +83,33 @@
             request.send();
         }
 
-        function deleteBookCopy(isbnToDelete) {
+        function deleteBookCopy(isbnToDelete, idToDelete) {
             deleteRequest = new XMLHttpRequest();
-            deleteRequest.onreadystatechange = onDeletion;
-            deleteRequest.open("delete", "deleteBook?isbn=" + isbnToDelete, true);
+            deleteRequest.onreadystatechange = onAction;
+            deleteRequest.open("delete", "deleteBookCopy?isbn=" + isbnToDelete + "&id=" + idToDelete, true);
             deleteRequest.send();
         }
 
-        function onDeletion() {
+        function loanBookCopy(isbn, id) {
+            request = new XMLHttpRequest();
+            request.onreadystatechange = onAction;
+            request.open("post", "loanBookCopy?isbn=" + isbn + "&id=" + id, true);
+            request.send();
+        }
+
+        function returnBookCopy(isbn, id) {
+            request = new XMLHttpRequest();
+            request.onreadystatechange = onAction;
+            request.open("post", "returnBookCopy?isbn=" + isbn + "&id=" + id, true);
+            request.send();
+        }
+
+        function onAction() {
             if (request.status === 200 && request.readyState === 4) {
                 refreshList();
                 load();
             }
-         }
+        }
 
         function refreshList() {
             var table = document.getElementById('table');

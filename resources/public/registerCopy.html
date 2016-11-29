@@ -55,12 +55,16 @@
                     {
                         isbn: document.getElementById('isbn').value,
                         id: document.getElementById('id').value,
-                        status: document.getElementById('status').value,
+                        status: document.getElementById('status').value
                     }
             ));
         }
 
         function refreshMessages() {
+            document.getElementById("successMessage").style.visibility = "hidden";
+            document.getElementById("successMessage").style.display = "none";
+            document.getElementById("failMessage").style.visibility = "hidden";
+            document.getElementById("failMessage").style.display = "none";
             var message = document.getElementById('successMessage');
             if (typeof message != 'undefined')
             {
@@ -132,8 +136,8 @@
 
             <div class="col-sm-6">
                 <select class="form-control" id="status">
-                    <option value="TAKEN">Available</option>
-                    <option value="AVAILABLE">Taken</option>
+                    <option value="AVAILABLE">Available</option>
+                    <option value="TAKEN">Taken</option>
                 </select>
             </div>
         </div>
