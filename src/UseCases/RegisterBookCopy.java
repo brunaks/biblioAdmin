@@ -4,7 +4,6 @@ import DTOs.BookCopyInformation;
 import Entities.Book;
 import Entities.BookCopy;
 import Persistence.BookRepository;
-import Persistence.InMemoryBookRepository;
 import Receiver.*;
 
 /**
@@ -29,14 +28,19 @@ public class RegisterBookCopy {
                 Book book = bookRepository.getBookWith(bookCopy.getISBN());
                 if (book != null) {
                     bookRepository.save(bookCopy);
+                    receiver.bookCopyRegistrationSuccessful();
+                } else {
+                    receiver.bookCopyRegistrationFailed();
                 }
+            } else {
+                receiver.bookCopyRegistrationFailed();
             }
         }
     }
 
     private boolean BookCopyIsUnique() {
         ReadBookCopies readBookCopies = new ReadBookCopies(bookRepository);
-        for (BookCopyInformation bookCopyInformation : readBookCopies.getAllFor(this.bookCopyInformation.ISBN)) {
+        for (BookCopyInformation bookCopyInformation : readBookCopies.getAllFor(this.bookCopyInformation.isbn)) {
             if (bookCopyInformation.id.equalsIgnoreCase(this.bookCopyInformation.id)) {
                 return false;
             }
@@ -47,7 +51,7 @@ public class RegisterBookCopy {
     private BookCopy convert(BookCopyInformation bookCopyInformation) {
         BookCopy bookCopy = new BookCopy(receiver);
         bookCopy.setId(bookCopyInformation.id);
-        bookCopy.setISBN(bookCopyInformation.ISBN);
+        bookCopy.setISBN(bookCopyInformation.isbn);
         bookCopy.setStatus(bookCopyInformation.status);
         return bookCopy;
     }

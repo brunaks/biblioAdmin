@@ -22,6 +22,7 @@ public class RegisterBookRoute implements Route {
         this.bookRepository = bookRepository;
         this.receiver = receiver;
         converter = new Gson();
+        receiver.refresh();
     }
 
     @Override

@@ -24,6 +24,7 @@ public class RegisterBookCopyRoute implements Route{
         this.bookRepository = bookRepository;
         this.receiver = receiver;
         converter = new Gson();
+        receiver.refresh();
     }
 
     @Override

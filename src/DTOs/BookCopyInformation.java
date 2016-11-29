@@ -5,7 +5,7 @@ package DTOs;
  */
 public class BookCopyInformation {
 
-    public String ISBN;
+    public String isbn;
     public String id;
     public String status;
 }

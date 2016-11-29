@@ -4,7 +4,6 @@ import DTOs.BookCopyInformation;
 import Entities.Book;
 import Entities.BookCopy;
 import Persistence.BookRepository;
-import Persistence.InMemoryBookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class ReadBookCopies {
         if (book != null) {
             for (BookCopy bookCopy : book.getBookCopies()) {
                 BookCopyInformation bookCopyInformation = new BookCopyInformation();
-                bookCopyInformation.ISBN = book.getISBN();
+                bookCopyInformation.isbn = book.getISBN();
                 bookCopyInformation.id = bookCopy.getId();
                 bookCopyInformation.status = bookCopy.getStatus();
                 bookCopies.add(bookCopyInformation);

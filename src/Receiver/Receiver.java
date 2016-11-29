@@ -17,4 +17,7 @@ public interface Receiver {
     void logErrorISBNLengthIsIncorrect();
     void logErrorIdCannotBeBlank();
     void logErrorStatusCannotBeBlank();
+    void bookCopyRegistrationSuccessful();
+    void bookCopyRegistrationFailed();
+    void refresh();
 }

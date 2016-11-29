@@ -7,13 +7,14 @@ public class SimpleReceiver implements Receiver {
 
     public boolean bookRegistrationWasSuccessful = false;
     public boolean bookDeletionWasSuccessful = false;
+    public boolean bookCopyRegistrationWasSuccessful = false;
     public boolean titleIsEmpty = false;
     public boolean authorIsEmpty = false;
     public boolean editionIsEmpty = false;
     public boolean publishingCompanyIsEmpty = false;
     public boolean ISBNFormatIsNotValid = false;
-    private boolean idCannotBeBlank = false;
-    private boolean statusCannotBeBlank = false;
+    private boolean idIsEmpty = false;
+    private boolean statusIsEmpty = false;
 
     @Override
     public void bookRegistrationSuccessful() {
@@ -72,11 +73,35 @@ public class SimpleReceiver implements Receiver {
 
     @Override
     public void logErrorIdCannotBeBlank() {
-        idCannotBeBlank = true;
+        idIsEmpty = true;
     }
 
     @Override
     public void logErrorStatusCannotBeBlank() {
-        statusCannotBeBlank = true;
+        statusIsEmpty = true;
+    }
+
+    @Override
+    public void bookCopyRegistrationSuccessful() {
+        this.bookCopyRegistrationWasSuccessful = true;
+    }
+
+    @Override
+    public void bookCopyRegistrationFailed() {
+        this.bookCopyRegistrationWasSuccessful = false;
+    }
+
+    @Override
+    public void refresh() {
+        bookRegistrationWasSuccessful = false;
+        bookDeletionWasSuccessful = false;
+        bookCopyRegistrationWasSuccessful = false;
+        titleIsEmpty = false;
+        authorIsEmpty = false;
+        editionIsEmpty = false;
+        publishingCompanyIsEmpty = false;
+        ISBNFormatIsNotValid = false;
+        idIsEmpty = false;
+        statusIsEmpty = false;
     }
 }
