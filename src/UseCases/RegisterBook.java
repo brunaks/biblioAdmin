@@ -41,7 +41,7 @@ public class RegisterBook {
     }
 
     private Book createBook() {
-        Book book = new Book();
+        Book book = new Book(receiver);
         book.setTitle(bookInformation.title);
         book.setAuthor(bookInformation.author);
         book.setISBN(bookInformation.ISBN);

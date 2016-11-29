@@ -8,4 +8,11 @@ public interface Receiver {
     void bookRegistrationFailed();
     void bookDeletionWasSuccessful();
     void bookDeletionFailed();
+    void logErrorTitleIsEmpty();
+    void logErrorAuthorIsEmpty();
+    void logErrorEditionIsEmpty();
+    void logErrorPublishingCompanyIsEmpty();
+    void logErrorISBNMustbeNumeric();
+    void logErrorISBNLastDigitMustBeNumericOrX();
+    void logErrorISBNLengthIsIncorrect();
 }

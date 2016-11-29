@@ -5,8 +5,13 @@ package Receiver;
  */
 public class SimpleReceiver implements Receiver {
 
-    public boolean bookRegistrationWasSuccessful;
-    public boolean bookDeletionWasSuccessful;
+    public boolean bookRegistrationWasSuccessful = false;
+    public boolean bookDeletionWasSuccessful = false;
+    public boolean titleIsEmpty = false;
+    public boolean authorIsEmpty = false;
+    public boolean editionIsEmpty = false;
+    public boolean publishingCompanyIsEmpty = false;
+    public boolean ISBNFormatIsNotValid = false;
 
     @Override
     public void bookRegistrationSuccessful() {
@@ -26,5 +31,40 @@ public class SimpleReceiver implements Receiver {
     @Override
     public void bookDeletionFailed() {
         bookDeletionWasSuccessful = false;
+    }
+
+    @Override
+    public void logErrorTitleIsEmpty() {
+        titleIsEmpty = true;
+    }
+
+    @Override
+    public void logErrorAuthorIsEmpty() {
+        authorIsEmpty = true;
+    }
+
+    @Override
+    public void logErrorEditionIsEmpty() {
+        editionIsEmpty = true;
+    }
+
+    @Override
+    public void logErrorPublishingCompanyIsEmpty() {
+        publishingCompanyIsEmpty = true;
+    }
+
+    @Override
+    public void logErrorISBNMustbeNumeric() {
+        ISBNFormatIsNotValid = true;
+    }
+
+    @Override
+    public void logErrorISBNLastDigitMustBeNumericOrX() {
+        ISBNFormatIsNotValid = true;
+    }
+
+    @Override
+    public void logErrorISBNLengthIsIncorrect() {
+        ISBNFormatIsNotValid = true;
     }
 }

@@ -83,14 +83,14 @@
          }
 
         function refreshList() {
-            var elem = document.getElementById('table');
-            if (typeof elem != 'undefined')
+            var table = document.getElementById('table');
+            if (typeof table != 'undefined')
             {
-                
+                while (table.firstChild) {
+                    table.removeChild(table.firstChild);
+                }
             }
         }
-
-
 
     </script>
 </head>

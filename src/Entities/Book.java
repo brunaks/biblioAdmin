@@ -1,16 +1,23 @@
 package Entities;
 
+import Receiver.Receiver;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
 
+    private Receiver receiver;
     private String author;
     private String title;
     private ISBN ISBN;
     private String edition;
     private String publishingCompany;
     private List<BookCopy> bookCopies = new ArrayList<>();
+
+    public Book(Receiver receiver) {
+        this.receiver = receiver;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -21,7 +28,7 @@ public class Book {
     }
 
     public void setISBN(String ISBN) {
-        this.ISBN = new ISBN(ISBN);
+        this.ISBN = new ISBN(ISBN, receiver);
     }
 
     public void setEdition(String edition) {
@@ -33,7 +40,43 @@ public class Book {
     }
 
     public boolean isValid() {
-        return !(title.isEmpty() || author.isEmpty() || edition.isEmpty() || !ISBN.isValid() || publishingCompany.isEmpty());
+        return isTitleValid() && isAuthorValid() && isEditionValid() && isPublishingCompanyValid() && ISBN.isValid();
+    }
+
+    public boolean isTitleValid() {
+        if (title.isEmpty()) {
+            receiver.logErrorTitleIsEmpty();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean isAuthorValid() {
+        if (author.isEmpty()) {
+            receiver.logErrorAuthorIsEmpty();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean isEditionValid() {
+        if (edition.isEmpty()) {
+            receiver.logErrorEditionIsEmpty();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean isPublishingCompanyValid() {
+        if (publishingCompany.isEmpty()) {
+            receiver.logErrorPublishingCompanyIsEmpty();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public String getTitle() {
@@ -63,9 +106,11 @@ public class Book {
     public class ISBN {
 
         private String code;
+        private Receiver receiver;
 
-        public ISBN(String ISBN) {
+        public ISBN(String ISBN, Receiver receiver) {
             this.code = ISBN;
+            this.receiver = receiver;
         }
 
         public String toString() {
@@ -73,19 +118,38 @@ public class Book {
         }
 
         public boolean isValid() {
-            return !code.isEmpty() && formatIsValid();
+            return formatIsValid();
         }
 
         private boolean formatIsValid() {
-            return code.length() == 13 && first12digitsAreOnlyNumber() && lastDigitIsANumberOrAnXLetter();
+            return lengthIsValid() && first12digitsAreOnlyNumber() && lastDigitIsANumberOrAnXLetter();
+        }
+
+        public boolean lengthIsValid() {
+            if (!code.isEmpty() && code.length() == 13) {
+                return true;
+            } else {
+                receiver.logErrorISBNLengthIsIncorrect();
+                return false;
+            }
         }
 
         private boolean first12digitsAreOnlyNumber() {
-            return code.substring(0,12).matches("[0-9]+");
+            if (code.substring(0,12).matches("[0-9]+")) {
+                return true;
+            } else {
+                receiver.logErrorISBNMustbeNumeric();
+                return false;
+            }
         }
 
         private boolean lastDigitIsANumberOrAnXLetter() {
-            return code.substring(12).matches("[0-9]+") || code.substring(12).matches("[Xx]");
+            if (code.substring(12).matches("[0-9]+") || code.substring(12).matches("[Xx]")) {
+                return true;
+            } else {
+                receiver.logErrorISBNLastDigitMustBeNumericOrX();
+                return false;
+            }
         }
     }
 }
