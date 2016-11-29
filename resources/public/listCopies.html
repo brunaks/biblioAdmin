@@ -42,24 +42,22 @@
             var textNode = document.createTextNode("Delete Book");
             deleteButton.appendChild(textNode);
             deleteButton.className = "btn btn-primary";
-            deleteButton.setAttribute("onclick", "deleteBook(\"" + obj["ISBN"] + "\")");
+            deleteButton.setAttribute("onclick", "deleteBookCopy(\"" + obj["ISBN"] + "\")");
             row.appendChild(deleteButton);
 
-            var registerCopyButton = document.createElement("a");
-            var textNode = document.createTextNode("Register a Copy");
-            registerCopyButton.appendChild(textNode);
-            registerCopyButton.className = "btn btn-primary";
-            registerCopyButton.setAttribute("href", "registerCopy.html?isbn=" + obj["ISBN"]);
-            registerCopyButton.setAttribute("role", "button");
-            row.appendChild(registerCopyButton);
+            var deleteButton = document.createElement("button");
+            var textNode = document.createTextNode("Delete Book");
+            deleteButton.appendChild(textNode);
+            deleteButton.className = "btn btn-primary";
+            deleteButton.setAttribute("onclick", "loanBookCopy(\"" + obj["ISBN"] + "\")");
+            row.appendChild(deleteButton);
 
-            var seeCopiesButton = document.createElement("a");
-            var textNode = document.createTextNode("See all Copies");
-            seeCopiesButton.appendChild(textNode);
-            seeCopiesButton.className = "btn btn-primary";
-            seeCopiesButton.setAttribute("href", "listCopies.html?isbn=" + obj["ISBN"]);
-            seeCopiesButton.setAttribute("role", "button");
-            row.appendChild(seeCopiesButton);
+            var deleteButton = document.createElement("button");
+            var textNode = document.createTextNode("Delete Book");
+            deleteButton.appendChild(textNode);
+            deleteButton.className = "btn btn-primary";
+            deleteButton.setAttribute("onclick", "returnBookCopy(\"" + obj["ISBN"] + "\")");
+            row.appendChild(deleteButton);
         }
 
         function showList() {
@@ -81,16 +79,16 @@
         function load() {
             request = new XMLHttpRequest();
             request.onreadystatechange = showList;
-            request.open("get", "listCatalog", true);
+            request.open("get", "listCopies?isbn=" + getISBN(), true);
             request.send();
         }
 
-        function deleteBook(isbnToDelete) {
+        function deleteBookCopy(isbnToDelete) {
             deleteRequest = new XMLHttpRequest();
             deleteRequest.onreadystatechange = onDeletion;
             deleteRequest.open("delete", "deleteBook?isbn=" + isbnToDelete, true);
             deleteRequest.send();
-        };
+        }
 
         function onDeletion() {
             if (request.status === 200 && request.readyState === 4) {
@@ -107,6 +105,12 @@
                     table.removeChild(table.firstChild);
                 }
             }
+        }
+
+        function getISBN() {
+            var parameters = new URLSearchParams(window.location.search);
+            var isbn = parameters.get('isbn');
+            return isbn;
         }
 
     </script>

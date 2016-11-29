@@ -24,11 +24,11 @@ public class RegisterBookCopyRoute implements Route{
         this.bookRepository = bookRepository;
         this.receiver = receiver;
         converter = new Gson();
-        receiver.refresh();
     }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        receiver.refresh();
         BookCopyInformation bookCopyInformation = convertRequest(request);
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();

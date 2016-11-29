@@ -3,13 +3,7 @@ package Main;
 import Persistence.BookRepository;
 import Persistence.InMemoryBookRepository;
 import Receiver.*;
-import Routes.DeleteBookRoute;
-import Routes.ListBooks;
-import Routes.RegisterBookCopyRoute;
-import Routes.RegisterBookRoute;
-import spark.Request;
-import spark.Response;
-import spark.Route;
+import Routes.*;
 import spark.Spark;
 
 /**
@@ -25,9 +19,10 @@ public class main {
         Receiver receiver = new SimpleReceiver();
 
         Spark.post("/registerBook", new RegisterBookRoute(bookRepository, receiver));
-        Spark.get("/listCatalog", new ListBooks(bookRepository));
+        Spark.get("/listCatalog", new ReadBooksRoute(bookRepository));
         Spark.delete("/deleteBook", new DeleteBookRoute(bookRepository, receiver));
         Spark.post("/deleteBook", new DeleteBookRoute(bookRepository, receiver));
         Spark.post("/registerBookCopy", new RegisterBookCopyRoute(bookRepository, receiver));
+        Spark.get("/listCopies", new ReadCopiesRoute(bookRepository));
     }
 }

@@ -21,11 +21,11 @@ public class DeleteBookRoute implements Route {
     public DeleteBookRoute(BookRepository bookRepository, Receiver receiver) {
         this.bookRepository = bookRepository;
         this.receiver = receiver;
-        receiver.refresh();
     }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        receiver.refresh();
         String isbn = request.queryParams("isbn");
         DeleteBook deleteBook = new DeleteBook(bookRepository, receiver);
         deleteBook.with(isbn);

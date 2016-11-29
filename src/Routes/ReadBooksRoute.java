@@ -10,12 +10,12 @@ import spark.Route;
 /**
  * Created by Bruna Koch Schmitt on 28/11/2016.
  */
-public class ListBooks implements Route{
+public class ReadBooksRoute implements Route{
 
     private BookRepository bookRepository;
     Gson converter;
 
-    public ListBooks(BookRepository bookRepository) {
+    public ReadBooksRoute(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
         converter = new Gson();
     }

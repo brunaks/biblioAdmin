@@ -22,11 +22,11 @@ public class RegisterBookRoute implements Route {
         this.bookRepository = bookRepository;
         this.receiver = receiver;
         converter = new Gson();
-        receiver.refresh();
     }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        receiver.refresh();
         BookInformation bookInformation = convertRequest(request);
         RegisterBook registerBook = new RegisterBook(bookRepository, receiver, bookInformation);
         registerBook.execute();
