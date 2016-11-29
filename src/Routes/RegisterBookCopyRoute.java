@@ -2,6 +2,7 @@ package Routes;
 
 import DTOs.BookCopyInformation;
 import DTOs.BookInformation;
+import Entities.BookCopy;
 import Persistence.BookRepository;
 import Receiver.Receiver;
 import UseCases.RegisterBook;
@@ -36,6 +37,10 @@ public class RegisterBookCopyRoute implements Route{
     }
 
     private BookCopyInformation convertRequest(Request request) {
-        return converter.fromJson(request.body(), BookCopyInformation.class);
+        BookCopyInformation bookCopyInformation = converter.fromJson(request.body(), BookCopyInformation.class);
+        if (bookCopyInformation.returnDate == null) {
+            bookCopyInformation.returnDate = "";
+        }
+        return bookCopyInformation;
     }
 }

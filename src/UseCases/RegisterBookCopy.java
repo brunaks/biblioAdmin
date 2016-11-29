@@ -53,6 +53,7 @@ public class RegisterBookCopy {
         bookCopy.setId(bookCopyInformation.id);
         bookCopy.setISBN(bookCopyInformation.isbn);
         bookCopy.setStatus(bookCopyInformation.status);
+        bookCopy.setReturnDate(bookCopyInformation.returnDate);
         return bookCopy;
     }
 }

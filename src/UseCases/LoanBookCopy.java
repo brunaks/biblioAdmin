@@ -6,6 +6,7 @@ import Entities.BookCopy;
 import Persistence.BookRepository;
 import Receiver.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class LoanBookCopy {
                 if (bookCopies.get(i).getId().equalsIgnoreCase(id)) {
                     if (bookCopies.get(i).getStatus().equalsIgnoreCase(BookCopy.Status.AVAILABLE.toString())) {
                         bookCopies.get(i).setStatus(BookCopy.Status.TAKEN.toString());
+                        bookCopies.get(i).setReturnDate(LocalDate.now().plusDays(12).toString());
                         bookRepository.update(book);
                     }
                 }

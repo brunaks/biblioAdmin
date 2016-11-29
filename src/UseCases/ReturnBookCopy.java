@@ -28,6 +28,7 @@ public class ReturnBookCopy {
                 if (bookCopies.get(i).getId().equalsIgnoreCase(id)) {
                     if (bookCopies.get(i).getStatus().equalsIgnoreCase(BookCopy.Status.TAKEN.toString())) {
                         bookCopies.get(i).setStatus(BookCopy.Status.AVAILABLE.toString());
+                        bookCopies.get(i).setReturnDate("");
                         bookRepository.update(book);
                     }
                 }

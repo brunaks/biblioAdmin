@@ -5,6 +5,7 @@ import Entities.Book;
 import Entities.BookCopy;
 import Persistence.BookRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,19 @@ public class ReadBookCopies {
                 bookCopyInformation.isbn = book.getISBN();
                 bookCopyInformation.id = bookCopy.getId();
                 bookCopyInformation.status = bookCopy.getStatus();
+                bookCopyInformation.returnDate = getFormattedReturnDate(bookCopy.getReturnDate());
                 bookCopies.add(bookCopyInformation);
             }
         }
         return bookCopies;
     }
+
+    private String getFormattedReturnDate(LocalDate returnDate) {
+        if (returnDate == null) {
+            return "";
+        } else {
+            return returnDate.toString();
+        }
+    }
 }
+

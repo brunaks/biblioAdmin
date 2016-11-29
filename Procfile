@@ -1,1 +1,1 @@
-web: java -jar target/webstore.jar
+web: java -jar target/biblioAdmin.jar

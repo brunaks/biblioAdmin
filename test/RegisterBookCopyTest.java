@@ -11,6 +11,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class RegisterBookCopyTest {
@@ -39,6 +42,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.isbn = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation.returnDate = "";
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
@@ -48,6 +52,7 @@ public class RegisterBookCopyTest {
         Assert.assertEquals("1", bookCopies.get(0).id);
         Assert.assertEquals("1111111111111", bookCopies.get(0).isbn);
         Assert.assertEquals(BookCopy.Status.AVAILABLE.toString(), bookCopies.get(0).status);
+        Assert.assertEquals("", bookCopies.get(0).returnDate);
     }
 
     @Test
@@ -56,6 +61,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.isbn = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation.returnDate = "";
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
@@ -79,6 +85,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.isbn = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation.returnDate = "";
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
@@ -86,6 +93,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation2.id = "2";
         bookCopyInformation2.isbn = "1111111111111";
         bookCopyInformation2.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation2.returnDate = "";
         RegisterBookCopy registerBookCopy2 = new RegisterBookCopy(bookRepository, bookCopyInformation2, receiver);
         registerBookCopy2.execute();
 
@@ -95,10 +103,12 @@ public class RegisterBookCopyTest {
         Assert.assertEquals("1", bookCopies.get(0).id);
         Assert.assertEquals("1111111111111", bookCopies.get(0).isbn);
         Assert.assertEquals(BookCopy.Status.AVAILABLE.toString(), bookCopies.get(0).status);
+        Assert.assertEquals("", bookCopies.get(0).returnDate);
 
         Assert.assertEquals("2", bookCopies.get(1).id);
         Assert.assertEquals("1111111111111", bookCopies.get(1).isbn);
         Assert.assertEquals(BookCopy.Status.AVAILABLE.toString(), bookCopies.get(1).status);
+        Assert.assertEquals("", bookCopies.get(1).returnDate);
 
     }
 
@@ -117,6 +127,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "";
         bookCopyInformation.isbn = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation.returnDate = "";
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
@@ -140,6 +151,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.isbn = "";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation.returnDate = "";
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
@@ -163,6 +175,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.isbn = "1111111111111";
         bookCopyInformation.status = "";
+        bookCopyInformation.returnDate = "";
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
@@ -186,6 +199,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation.id = "1";
         bookCopyInformation.isbn = "1111111111111";
         bookCopyInformation.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation.returnDate = "";
         RegisterBookCopy registerBookCopy = new RegisterBookCopy(bookRepository, bookCopyInformation, receiver);
         registerBookCopy.execute();
 
@@ -193,6 +207,7 @@ public class RegisterBookCopyTest {
         bookCopyInformation2.id = "1";
         bookCopyInformation2.isbn = "1111111111111";
         bookCopyInformation2.status = BookCopy.Status.AVAILABLE.toString();
+        bookCopyInformation2.returnDate = "";
         RegisterBookCopy registerBookCopy2 = new RegisterBookCopy(bookRepository, bookCopyInformation2, receiver);
         registerBookCopy2.execute();
 
@@ -202,5 +217,6 @@ public class RegisterBookCopyTest {
         Assert.assertEquals("1", bookCopies.get(0).id);
         Assert.assertEquals("1111111111111", bookCopies.get(0).isbn);
         Assert.assertEquals(BookCopy.Status.AVAILABLE.toString(), bookCopies.get(0).status);
+        Assert.assertEquals("", bookCopies.get(0).returnDate);
     }
 }
