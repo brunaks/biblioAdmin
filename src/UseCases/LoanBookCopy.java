@@ -29,8 +29,8 @@ public class LoanBookCopy {
             List<BookCopy> bookCopies = book.getBookCopies();
             for (int i = 0; i < bookCopies.size(); i++) {
                 if (bookCopies.get(i).getId().equalsIgnoreCase(id)) {
-                    if (bookCopies.get(i).getStatus().equalsIgnoreCase(BookCopy.Status.AVAILABLE.toString())) {
-                        bookCopies.get(i).setStatus(BookCopy.Status.TAKEN.toString());
+                    if (bookCopies.get(i).getStatus().equals(BookCopy.Status.AVAILABLE)) {
+                        bookCopies.get(i).setStatus(BookCopy.Status.TAKEN);
                         bookCopies.get(i).setReturnDate(LocalDate.now().plusDays(12).toString());
                         bookRepository.update(book);
                     }

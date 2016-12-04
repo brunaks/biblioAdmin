@@ -3,6 +3,7 @@ package UseCases;
 import DTOs.BookCopyInformation;
 import Entities.Book;
 import Entities.BookCopy;
+import Entities.ISBN;
 import Persistence.BookRepository;
 import Receiver.*;
 
@@ -25,7 +26,7 @@ public class RegisterBookCopy {
         if (bookCopyInformation != null) {
             BookCopy bookCopy = convert(bookCopyInformation);
             if (bookCopy.isValid() && BookCopyIsUnique()) {
-                Book book = bookRepository.getBookWith(bookCopy.getISBN());
+                Book book = bookRepository.getBookWith(bookCopy.getISBN().toString());
                 if (book != null) {
                     bookRepository.save(bookCopy);
                     receiver.bookCopyRegistrationSuccessful();
@@ -51,8 +52,11 @@ public class RegisterBookCopy {
     private BookCopy convert(BookCopyInformation bookCopyInformation) {
         BookCopy bookCopy = new BookCopy(receiver);
         bookCopy.setId(bookCopyInformation.id);
-        bookCopy.setISBN(bookCopyInformation.isbn);
-        bookCopy.setStatus(bookCopyInformation.status);
+        bookCopy.setISBN(new ISBN(bookCopyInformation.isbn, receiver));
+        try {
+            bookCopy.setStatus(BookCopy.Status.valueOf(bookCopyInformation.status));
+        }
+        catch (Exception e) {};
         bookCopy.setReturnDate(bookCopyInformation.returnDate);
         return bookCopy;
     }

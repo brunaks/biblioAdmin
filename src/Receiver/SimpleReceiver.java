@@ -13,9 +13,9 @@ public class SimpleReceiver implements Receiver {
     public boolean editionIsEmpty = false;
     public boolean publishingCompanyIsEmpty = false;
     public boolean ISBNFormatIsNotValid = false;
-    private boolean idIsEmpty = false;
-    private boolean statusIsEmpty = false;
-    private boolean bookCopyDeletionWasSuccessful = false;
+    public boolean idIsEmpty = false;
+    public boolean statusIsEmpty = false;
+    public boolean bookCopyDeletionWasSuccessful = false;
 
     @Override
     public void bookRegistrationSuccessful() {

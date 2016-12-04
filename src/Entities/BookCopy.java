@@ -1,7 +1,6 @@
 package Entities;
 
 import Receiver.Receiver;
-
 import java.time.LocalDate;
 
 /**
@@ -10,9 +9,9 @@ import java.time.LocalDate;
 public class BookCopy {
 
     private Receiver receiver;
-    private String status;
+    private Status status;
     private String id;
-    private String ISBN;
+    private ISBN ISBN;
     private LocalDate returnDate;
 
     public BookCopy(Receiver receiver) {
@@ -23,7 +22,7 @@ public class BookCopy {
         return id;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -31,30 +30,34 @@ public class BookCopy {
         this.id = id;
     }
 
-    public void setISBN(String ISBN) {
+    public void setISBN(ISBN ISBN) {
         this.ISBN = ISBN;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-    public String getISBN() {
+    public ISBN getISBN() {
         return ISBN;
     }
 
     public boolean isValid() {
         boolean idIsEmpty = false;
         boolean statusIsEmpty = false;
+        boolean ISBNIsNotValid = false;
         if (id.isEmpty()) {
             receiver.logErrorIdCannotBeBlank();
             idIsEmpty = true;
         }
-        if (status.isEmpty()) {
+        if (status == null) {
             receiver.logErrorStatusCannotBeBlank();
             statusIsEmpty = true;
         }
-        return !idIsEmpty && !statusIsEmpty;
+        if (!ISBN.isValid()) {
+            ISBNIsNotValid = true;
+        }
+        return !(idIsEmpty || statusIsEmpty || ISBNIsNotValid);
     }
 
     public void setReturnDate(String returnDate) {

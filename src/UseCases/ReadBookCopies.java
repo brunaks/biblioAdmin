@@ -25,7 +25,7 @@ public class ReadBookCopies {
                 BookCopyInformation bookCopyInformation = new BookCopyInformation();
                 bookCopyInformation.isbn = book.getISBN();
                 bookCopyInformation.id = bookCopy.getId();
-                bookCopyInformation.status = bookCopy.getStatus();
+                bookCopyInformation.status = bookCopy.getStatus().toString();
                 bookCopyInformation.returnDate = getFormattedReturnDate(bookCopy.getReturnDate());
                 bookCopies.add(bookCopyInformation);
             }

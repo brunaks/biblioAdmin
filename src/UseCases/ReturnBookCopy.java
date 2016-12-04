@@ -26,8 +26,8 @@ public class ReturnBookCopy {
             List<BookCopy> bookCopies = book.getBookCopies();
             for (int i = 0; i < bookCopies.size(); i++) {
                 if (bookCopies.get(i).getId().equalsIgnoreCase(id)) {
-                    if (bookCopies.get(i).getStatus().equalsIgnoreCase(BookCopy.Status.TAKEN.toString())) {
-                        bookCopies.get(i).setStatus(BookCopy.Status.AVAILABLE.toString());
+                    if (bookCopies.get(i).getStatus().equals(BookCopy.Status.TAKEN)) {
+                        bookCopies.get(i).setStatus(BookCopy.Status.AVAILABLE);
                         bookCopies.get(i).setReturnDate("");
                         bookRepository.update(book);
                     }
